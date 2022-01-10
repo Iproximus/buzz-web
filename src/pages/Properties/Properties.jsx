@@ -1,8 +1,15 @@
+// UI screen adjustment  1 
+// Update/delete/select all /by id API   2
+// validations -> 5
+// Filter    6
+// remove picture column    3
+// Navigation-menu formatted form   4
+
 import React, { useState } from 'react'
-import UserForm from "./UserForm";
+import PropertyForm from "./PropertyForm";
 import { Paper, makeStyles, TableBody, TableRow, TableCell, Toolbar, InputAdornment } from '@material-ui/core';
 import useTable from "../../components/useTable";
-import * as userService from "../../services/userService";
+import * as propertyService from "../../services/propertyService";
 import Controls from "../../components/controls/Controls";
 import { Search } from "@material-ui/icons";
 import AddIcon from '@material-ui/icons/Add';
@@ -11,11 +18,11 @@ import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import CloseIcon from '@material-ui/icons/Close';
 import Notification from "../../components/Notification";
 import ConfirmDialog from "../../components/ConfirmDialog";
-
+import axios from 'axios';
 const useStyles = makeStyles(theme => ({
     pageContent: {
-        margin: theme.spacing(1),
-        padding: theme.spacing(2)
+        margin: theme.spacing(0),
+        padding: theme.spacing(0)
     },
     searchInput: {
         width: '30%'
@@ -28,19 +35,35 @@ const useStyles = makeStyles(theme => ({
 
 
 const headCells = [
-    { id: 'firstName', label: 'First Name' },
-    { id: 'lastName', label: 'Last Name' },
-    { id: 'email', label: 'Email Address' },
-    { id: 'mobile', label: 'Mobile Number' },
+    { id: 'smallPicture', label: 'Picture' },
+    { id: 'streetNumber', label: 'Street Number' },
+    { id: 'street', label: 'Street' },
+    { id: 'city', label: 'City' },
+    { id: 'state', label: 'State' },
+    { id: 'zip', label: 'Zip code' },
+    // { id: 'lastName', label: 'Last Name' },
+    // { id: 'firstName', label: 'First Name' },
+    { id: 'ownerName', label: 'Owner Name'},
+    { id: 'phone', label: 'Phone' },
+    { id: 'email', label: 'Email' },
+    { id: 'documents', label: 'Documents' },
+    { id: 'duesStatus', label: 'Dues Status' },
+    // { id: 'yearBuilt', label: 'Year Built' },
+    // { id: 'area', label: 'Area' },
+    // { id: 'lotArea', label: 'Lot Area' },
+    // { id: 'bedRooms', label: 'Bed Rooms' },
+    // { id: 'bathRooms', label: 'Bath Rooms' },
+    // { id: 'storey', label: 'Storey' },
+    // { id: 'street', label: 'Street' },
     //{ id: 'department', label: 'Department' },
     { id: 'actions', label: 'Actions', disableSorting: true }
 ]
 
-export default function Users() {
+export default function Properties() {
 
     const classes = useStyles();
     const [recordForEdit, setRecordForEdit] = useState(null)
-    const [records, setRecords] = useState(userService.getAllUsers())
+    const [records, setRecords] = useState(propertyService.getAllUsers())
     const [filterFn, setFilterFn] = useState({ fn: items => { return items; } })
     const [openPopup, setOpenPopup] = useState(false)
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
@@ -64,16 +87,24 @@ export default function Users() {
             }
         })
     }
-    
+
     const addOrEdit = (user, resetForm) => {
-        if (user.id === 0)
-            userService.insertUser(user)
+        if (user.id === 0){
+            propertyService.insertUser(user)
+            axios.post('http://localhost:2552/api/property/addProperty', user)
+                .then((res) => {
+                        console.log(res.data);
+                this.res({ users: res.data });
+            }).catch((error) => {
+            console.log(error);
+            });
+        }
         else
-            userService.updateUser(user)
+            propertyService.updateUser(user)
         resetForm()
         setRecordForEdit(null)
         setOpenPopup(false)
-        setRecords(userService.getAllUsers())
+        setRecords(propertyService.getAllUsers())
         setNotify({
             isOpen: true,
             message: 'Submitted Successfully',
@@ -92,15 +123,14 @@ export default function Users() {
             ...confirmDialog,
             isOpen: false
         })
-        userService.deleteUser(id);
-        setRecords(userService.getAllUsers())
+        propertyService.deleteUser(id);
+        setRecords(propertyService.getAllUsers())
         setNotify({
             isOpen: true,
             message: 'Deleted Successfully',
             type: 'error'
         })
     }
-
     return (
         <>
             {/* <PageHeader
@@ -112,7 +142,7 @@ export default function Users() {
 
                 <Toolbar>
                     <Controls.Input
-                        label="Search Users"
+                        label="Search Properties"
                         className={classes.searchInput}
                         InputProps={{
                             startAdornment: (<InputAdornment position="start">
@@ -129,16 +159,25 @@ export default function Users() {
                         onClick={() => { setOpenPopup(true); setRecordForEdit(null); }}
                     />
                 </Toolbar>
-                <TblContainer>
+                <TblContainer >
                     <TblHead />
                     <TableBody>
                         {
                             recordsAfterPagingAndSorting().map(item =>
                                 (<TableRow key={item.id}>
-                                    <TableCell>{item.firstName}</TableCell>
-                                    <TableCell>{item.lastName}</TableCell>
+                                    <TableCell >{item.smallPicture}</TableCell>
+                                    <TableCell>{item.streetNumber}</TableCell>
+                                    <TableCell>{item.street}</TableCell>
+                                    <TableCell>{item.city}</TableCell>
+                                    <TableCell>{item.state}</TableCell>
+                                    <TableCell>{item.zip}</TableCell>
+                                    {/* <TableCell>{item.lastName}</TableCell>
+                                    <TableCell>{item.firstName}</TableCell> */}
+                                    <TableCell>{item.lastName+','+item.firstName}</TableCell>
+                                    <TableCell>{item.phone}</TableCell>
                                     <TableCell>{item.email}</TableCell>
-                                    <TableCell>{item.mobile}</TableCell>
+                                    <TableCell>{item.documents}</TableCell>
+                                    <TableCell>{item.duesStatus}</TableCell>
                                     {/* <TableCell>{item.department}</TableCell> */}
                                     <TableCell>
                                         <Controls.ActionButton
@@ -167,11 +206,11 @@ export default function Users() {
                 <TblPagination />
             </Paper>
             <Popup
-                title="User Form"
+                title="Property Form"
                 openPopup={openPopup}
                 setOpenPopup={setOpenPopup}
             >
-                <UserForm
+                <PropertyForm
                     recordForEdit={recordForEdit}
                     addOrEdit={addOrEdit} />
             </Popup>
@@ -185,4 +224,7 @@ export default function Users() {
             />
         </>
     )
+
 }
+
+
