@@ -1,11 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import './App.css';
-//import SideMenu from "../components/SideMenu";
+import axios from 'axios';
+
 import { makeStyles, CssBaseline, createMuiTheme, ThemeProvider } from '@material-ui/core';
-//import Header from "../components/Header";
-//import PageHeader from '../components/PageHeader';
+import MenuAppBar from "../components/controls/AppBar";
+import MiniDrawer from "../components/controls/Drawer";
+
 
 import Users from "../pages/Users/Users";
+
+import Register from '../components/register'
+import Login from '../components/login'
+import Home from '../components/home'
+import Message from '../components/message'
+import UserContext from '../context/userContext'
+
 
 const theme = createMuiTheme({
   palette: {
@@ -21,16 +32,16 @@ const theme = createMuiTheme({
       default: "#f4f5fd"
     },
   },
-  overrides:{
-    MuiAppBar:{
-      root:{
-        transform:'translateZ(0)'
+  overrides: {
+    MuiAppBar: {
+      root: {
+        transform: 'translateZ(0)'
       }
     }
   },
-  props:{
-    MuiIconButton:{
-      disableRipple:true
+  props: {
+    MuiIconButton: {
+      disableRipple: true
     }
   }
 })
@@ -45,15 +56,53 @@ const useStyles = makeStyles({
 function App() {
   const classes = useStyles();
 
+  const [userData, setUserData] = useState({
+    token: undefined,
+    user: undefined
+  });
+
+  useEffect(() => {
+    const checkLoggedIn = async () => {
+      let token = localStorage.getItem("auth-token");
+      if (token === null) {
+        localStorage.setItem("auth-token", "");
+        token = "";
+      }
+      const tokenResponse = await axios.post('http://localhost:2552/api/users/tokenIsValid', null, { headers: { "x-auth-token": token } });
+      console.log(tokenResponse);
+      if (tokenResponse.data) {
+        const userRes = await axios.get('http://localhost:2552/api/users/', {
+          headers: { "x-auth-token": token },
+        });
+        setUserData({
+          token,
+          user: userRes.data,
+        });
+      }
+    }
+    checkLoggedIn();
+  }, []);
+
+
   return (
     <ThemeProvider theme={theme}>
       {/* <SideMenu /> */}
+      <UserContext.Provider value={{ userData, setUserData }}>
+
       <div className={classes.appMain}>
+        {/* <Home/> */}
+        <Routes>
+            <Route exact path="*" element={<Message />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+          </Routes>
         {/* <Header /> */}
-        
-        <Users />
+        {/* <MenuAppBar/> */} 
+        {/* <MiniDrawer/>  */}
+        {/* <Users /> */}
       </div>
       <CssBaseline />
+      </UserContext.Provider>
     </ThemeProvider>
   );
 }

@@ -1,0 +1,69 @@
+.App {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body,
+html {
+    background-image: url(../components/image/bg-img2.jpg);
+    height: 100%;
+    margin: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+}
+
+.Login-component {
+    /* The image used */
+    margin-top: 5%;
+    margin-right: 35%;
+    margin-left: 35%;
+    margin-bottom: 5%;
+    padding-top: 20px;
+    padding-bottom: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+    box-shadow: 10px;
+    border-radius: 10px;
+}
+
+.Reg-component {
+    /* The image used */
+    margin-top: 5%;
+    margin-right: 35%;
+    margin-left: 35%;
+    padding-top: 10px;
+    padding-bottom: 30px;
+    padding-left: 10px;
+    padding-right: 10px;
+    box-shadow: 10px;
+    border-radius: 10px;
+}
+
+.Button-css {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.App {
+    text-align: center;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: transparent;
+    background-color: 'rgba(52, 52, 52, .9)';
+}
+
+.header a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.register {
+    text-align: center;
+}
