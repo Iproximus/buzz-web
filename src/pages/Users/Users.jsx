@@ -1,19 +1,19 @@
 import React, { useState } from 'react'
-import UserForm from "./UserForm";
-//import PageHeader from "../../components/PageHeader";
-//import PeopleOutlineTwoToneIcon from '@material-ui/icons/PeopleOutlineTwoTone';
+import { Search } from "@material-ui/icons";
+import AddIcon from '@material-ui/icons/Add';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import CloseIcon from '@material-ui/icons/Close';
 import { Paper, makeStyles, TableBody, TableRow, TableCell, Toolbar, InputAdornment } from '@material-ui/core';
+import UserForm from "./UserForm";
 import useTable from "../../components/useTable";
 import * as userService from "../../services/userService";
 import Controls from "../../components/controls/Controls";
-import { Search } from "@material-ui/icons";
-import AddIcon from '@material-ui/icons/Add';
 import Popup from "../../components/Popup";
-import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-import CloseIcon from '@material-ui/icons/Close';
 import Notification from "../../components/Notification";
 import ConfirmDialog from "../../components/ConfirmDialog";
 
+//import PeopleOutlineTwoToneIcon from '@material-ui/icons/PeopleOutlineTwoTone';
+//import PageHeader from "../../components/PageHeader";
 const useStyles = makeStyles(theme => ({
     pageContent: {
         margin: theme.spacing(1),
@@ -123,6 +123,7 @@ export default function Users() {
                         }}
                         onChange={handleSearch}
                     />
+                    
                     <Controls.Button
                         text="Add"
                         variant="outlined"
@@ -130,6 +131,7 @@ export default function Users() {
                         className={classes.newButton}
                         onClick={() => { setOpenPopup(true); setRecordForEdit(null); }}
                     />
+
                 </Toolbar>
                 <TblContainer>
                     <TblHead />
