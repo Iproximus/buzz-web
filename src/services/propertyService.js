@@ -3,22 +3,19 @@ const KEYS = {
     userId: 'userId'
 }
 
-// export const getDepartmentCollection = () => ([
-//     { id: '1', title: 'Development' },
-//     { id: '2', title: 'Marketing' },
-//     { id: '3', title: 'Accounting' },
-//     { id: '4', title: 'HR' },
-// ])
+export const getTypeCollection = () => ([
+        { id: '1', title: 'Single Family' },
+        { id: '2', title: 'Town Home' },
+        { id: '3', title: 'Condo' },
+        
+])
 
 export function insertUser(data) {
     let users = getAllUsers();
     data['id'] = generateUserId()
     users.push(data)
     localStorage.setItem(KEYS.users, JSON.stringify(users))
-    
-
 }
-
 export function updateUser(data) {
     let users = getAllUsers();
     let recordIndex = users.findIndex(x => x.id === data.id);
@@ -44,11 +41,5 @@ export function getAllUsers() {
     if (localStorage.getItem(KEYS.users) == null)
         localStorage.setItem(KEYS.users, JSON.stringify([]))
     let users = JSON.parse(localStorage.getItem(KEYS.users));
-    //map departmentID to department title
-    // let departments = getDepartmentCollection();
-    // return employees.map(x => ({
-    //     ...x,
-    //     department: departments[x.departmentId - 1].title
-    // }))
     return users;
 }

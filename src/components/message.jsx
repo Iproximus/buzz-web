@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import UserContext from './../context/userContext';
 import Users from '../pages/Users/Users'
+import MiniDrawer from "../components/controls/Drawer";
 
 const welcome = {marginLeft : "45%", fontFamily: 'Helvetica',  textTransform: 'capitalize' }
 
@@ -17,7 +18,7 @@ function Message () {
         <div>
             {userData.user ? (
                 // <h1 style = {welcome}>Welcome</h1>
-                <div><Users /></div>
+                <div><MiniDrawer/></div>
             ) : (
                 <>
                     <h2>Logout done</h2>

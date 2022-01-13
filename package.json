@@ -8,14 +8,17 @@
         "@material-ui/icons": "^4.11.2",
         "@material-ui/lab": "^4.0.0-alpha.56",
         "@material-ui/pickers": "^3.2.10",
-        "@material/button": "^13.0.0",
-        "@mui/material": "^5.2.6",
+        "@mui/icons-material": "^5.2.5",
         "@testing-library/jest-dom": "^4.2.4",
         "@testing-library/react": "^9.3.2",
         "@testing-library/user-event": "^7.1.2",
         "axios": "^0.24.0",
+        "classnames": "^2.3.1",
+        "cors": "^2.8.5",
         "date-fns": "^2.14.0",
         "material-ui-icons": "^1.0.0-beta.36",
+        "mongoose": "^6.1.5",
+        "nodemon": "^2.0.15",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
         "react-router-dom": "^6.2.1",
@@ -25,7 +28,8 @@
         "start": "set PORT=3003 && react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
-        "eject": "react-scripts eject"
+        "eject": "react-scripts eject",
+        "dev": "nodemon server.js"
     },
     "eslintConfig": {
         "extends": "react-app"

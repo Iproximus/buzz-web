@@ -4,6 +4,7 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import Error from './validate/error';
 import UserContext from './../context/userContext'
+import Home from '../components/home'
 
 const textFieldStyle = { position: 'relative', background: '#8c8c8c', marginLeft: '10%', marginRight: '10%', hoverColor: "e50914", width: '80%', borderRadius: '5px', marginBottom: '10px' }
 const buttonStyle = { color: '#FFFFFF', textTransform: 'capitalize', background: '#e50914', marginBottom: '10px', marginLeft: '10%', marginRight: '10%', width: '80%' }
@@ -42,6 +43,8 @@ function Register() {
   };
 
   return (
+    <div>
+      <Home/>
     < div style={divStyle} className='Reg-component' >
 
       <h1 style={h1Style}>Sign Up</h1>
@@ -75,6 +78,7 @@ function Register() {
 
       </form>
     </div >
+    </div>
   );
 }
 

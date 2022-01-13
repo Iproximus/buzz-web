@@ -6,6 +6,7 @@ import UserContext from './../context/userContext';
 const loginBtn = { color: '#FFFFFF', background: '#e50914', textTransform: 'capitalize', marginRight: '20px', width: '100px', }
 const signupBtn = { color: '#FFFFFF', background: '#e50914', textTransform: 'capitalize', marginRight: '20px', width: '100px' }
 const nameStyle = {fontWeight: 'bold',fontFamily: 'Helvetica',  textTransform: 'capitalize', color : '', marginRight : "20px"}
+
 function AuthOption() {
     const { userData, setUserData } = useContext(UserContext);
     const navigate = useNavigate();

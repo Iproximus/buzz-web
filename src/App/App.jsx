@@ -3,7 +3,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import './App.css';
 import axios from 'axios';
+
 import { makeStyles, CssBaseline, createMuiTheme, ThemeProvider } from '@material-ui/core';
+import MenuAppBar from "../components/controls/AppBar";
+import MiniDrawer from "../components/controls/Drawer";
+
+
 import Users from "../pages/Users/Users";
 
 import Register from '../components/register'
@@ -80,19 +85,25 @@ function App() {
 
 
   return (
-    <BrowserRouter>
+    <ThemeProvider theme={theme}>
+      {/* <SideMenu /> */}
       <UserContext.Provider value={{ userData, setUserData }}>
-        <Home />
-        <Routes>
-          <Route exact path="/" element={<Message />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          {/* <div className={classes.appMain}><Users /></div> */}
-          {/* <CssBaseline /> */}
-        </Routes>
-      </UserContext.Provider>
-    </BrowserRouter>
 
+      <div className={classes.appMain}>
+        {/* <Home/> */}
+        <Routes>
+            <Route exact path="*" element={<Message />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+          </Routes>
+        {/* <Header /> */}
+        {/* <MenuAppBar/> */} 
+        {/* <MiniDrawer/>  */}
+        {/* <Users /> */}
+      </div>
+      <CssBaseline />
+      </UserContext.Provider>
+    </ThemeProvider>
   );
 }
 
