@@ -8,7 +8,7 @@
 // adding name below the icon in drawer
 
 import React from 'react';
-import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
+import {  Route, Routes, Link } from 'react-router-dom';
 import logo from './../../assets/images/netflix.png';
 import PropTypes from 'prop-types';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -26,7 +26,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import MenuAppBar from "../controls/AppBar";
+// import MenuAppBar from "../controls/AppBar";
 import InboxIcon from '@material-ui/icons/Dashboard';
 import UsersIcon from '@material-ui/icons/PeopleAlt';
 import PropertiesIcon from '@material-ui/icons/Apps';
@@ -40,7 +40,7 @@ import Users from '../../pages/Users/Users';
 import Properties from "../../pages/Properties/Properties";
 import Reports from "../../pages/Reports";
 import Settings from "../../pages/Settings";
-import AuthOption from '../authOption';
+// import AuthOption from '../authOption';
 import Home from '../../components/home'
 
 const drawerWidth = 240;
@@ -56,6 +56,7 @@ const styles = theme => ({
     display: 'flex',
   },
   appBar: {
+    height:'70px',
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
@@ -70,7 +71,7 @@ const styles = theme => ({
     }),
   },
   menuButton: {
-    marginLeft: 12,
+    marginLeft: 12, 
     duration: theme.transitions.duration.enteringScreen,
     marginRight: 36,
   },
@@ -115,18 +116,6 @@ const styles = theme => ({
 });
 
 class MiniDrawer extends React.Component {
-  // constructor(props){
-  //     super(props);
-  //     this.state = {
-
-  //         "show" : null
-  //     };
-  // }
-  // handleToggle = () => this.setState({open: this.state.open});
-
-  // showDashboard = () => {
-  //     this.setState({show: 'Dashboard'});
-  // }
   state = {
     open: false,
   };
@@ -155,15 +144,15 @@ class MiniDrawer extends React.Component {
     this.setState({ anchorEl: null });
   };
 
-  
+
 
   render() {
     const { classes, theme } = this.props;
     const { auth, anchorEl } = this.state;
     const open = Boolean(anchorEl);
 
-    
-      
+
+
     return (
       <div className={classes.root}>
         <AppBar
@@ -179,7 +168,7 @@ class MiniDrawer extends React.Component {
             >
               <MenuIcon />
             </IconButton>
-            <img src={logo} class="organizationLogo" />
+            <img src={logo} class="organizationLogo" alt='org-img'/>
             <Typography variant="title" color="inherit" noWrap class="organizationName">
               BUZZ
             </Typography>
@@ -210,7 +199,7 @@ class MiniDrawer extends React.Component {
                   onClose={this.handleClose}
                 >
                   <MenuItem onClick={this.handleClose}>Change Password</MenuItem>
-                  <MenuItem onClick={<Home/>}>Log Out</MenuItem>
+                  <MenuItem onClick={<Home />}>Log Out</MenuItem>
 
                 </Menu>
                 <b>John</b>

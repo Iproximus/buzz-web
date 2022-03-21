@@ -5,8 +5,10 @@ import Checkbox from "./Checkbox";
 import DatePicker from "./DatePicker";
 import Button from "./Button";
 import ActionButton from "./ActionButton";
+import FileInput from "./FileInput";
 
 const Controls = {
+    FileInput,
     Input,
     RadioGroup,
     Select,

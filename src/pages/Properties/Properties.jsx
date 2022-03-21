@@ -19,10 +19,14 @@ import CloseIcon from '@material-ui/icons/Close';
 import Notification from "../../components/Notification";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import axios from 'axios';
+
+import MultiStepForm from '../../components/PropertyRegisterationFrom/MultiStepForm'
+
+
 const useStyles = makeStyles(theme => ({
     pageContent: {
         margin: theme.spacing(0),
-        padding: theme.spacing(0)
+        padding: theme.spacing(1)
     },
     searchInput: {
         width: '30%'
@@ -36,14 +40,14 @@ const useStyles = makeStyles(theme => ({
 
 const headCells = [
     { id: 'smallPicture', label: 'Picture' },
-    { id: 'streetNumber', label: 'Street Number' },
-    { id: 'street', label: 'Street' },
-    { id: 'city', label: 'City' },
-    { id: 'state', label: 'State' },
-    { id: 'zip', label: 'Zip code' },
+    // { id: 'streetNumber', label: 'Street Number' },
+    // { id: 'street', label: 'Street' },
+    // { id: 'city', label: 'City' },
+    { id: 'location', label: 'Location' },
+    // { id: 'zip', label: 'Zip code' },
     // { id: 'lastName', label: 'Last Name' },
     // { id: 'firstName', label: 'First Name' },
-    { id: 'ownerName', label: 'Owner Name'},
+    { id: 'ownerName', label: 'Owner'},
     { id: 'phone', label: 'Phone' },
     { id: 'email', label: 'Email' },
     { id: 'documents', label: 'Documents' },
@@ -166,14 +170,10 @@ export default function Properties() {
                             recordsAfterPagingAndSorting().map(item =>
                                 (<TableRow key={item.id}>
                                     <TableCell >{item.smallPicture}</TableCell>
-                                    <TableCell>{item.streetNumber}</TableCell>
-                                    <TableCell>{item.street}</TableCell>
-                                    <TableCell>{item.city}</TableCell>
-                                    <TableCell>{item.state}</TableCell>
-                                    <TableCell>{item.zip}</TableCell>
+                                    <TableCell>{item.city+ ', '+item.state}</TableCell>
                                     {/* <TableCell>{item.lastName}</TableCell>
                                     <TableCell>{item.firstName}</TableCell> */}
-                                    <TableCell>{item.lastName+','+item.firstName}</TableCell>
+                                    <TableCell>{item.lastName+', '+item.firstName}</TableCell>
                                     <TableCell>{item.phone}</TableCell>
                                     <TableCell>{item.email}</TableCell>
                                     <TableCell>{item.documents}</TableCell>
@@ -210,9 +210,15 @@ export default function Properties() {
                 openPopup={openPopup}
                 setOpenPopup={setOpenPopup}
             >
-                <PropertyForm
+                {/* <PropertyForm
                     recordForEdit={recordForEdit}
-                    addOrEdit={addOrEdit} />
+                    addOrEdit={addOrEdit} /> */}
+
+                    {/* <AppRouter
+                    addOrEdit={addOrEdit}/> */}
+                       <MultiStepForm
+                    addOrEdit={addOrEdit}/>
+
             </Popup>
             <Notification
                 notify={notify}

@@ -68,10 +68,10 @@ function App() {
         localStorage.setItem("auth-token", "");
         token = "";
       }
-      const tokenResponse = await axios.post('http://localhost:2552/api/users/tokenIsValid', null, { headers: { "x-auth-token": token } });
+      const tokenResponse = await axios.post('http://localhost:1000/api/users/tokenIsValid', null, { headers: { "x-auth-token": token } });
       console.log(tokenResponse);
       if (tokenResponse.data) {
-        const userRes = await axios.get('http://localhost:2552/api/users/', {
+        const userRes = await axios.get('http://localhost:1000/api/users/', {
           headers: { "x-auth-token": token },
         });
         setUserData({
@@ -84,27 +84,60 @@ function App() {
   }, []);
 
 
+  // -----------------without auth-login-page-------------------
   return (
     <ThemeProvider theme={theme}>
-      {/* <SideMenu /> */}
       <UserContext.Provider value={{ userData, setUserData }}>
-
-      <div className={classes.appMain}>
-        {/* <Home/> */}
-        <Routes>
-            <Route exact path="*" element={<Message />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-          </Routes>
-        {/* <Header /> */}
-        {/* <MenuAppBar/> */} 
-        {/* <MiniDrawer/>  */}
-        {/* <Users /> */}
-      </div>
-      <CssBaseline />
+        <div className={classes.appMain}>
+         
+          <MiniDrawer />
+        </div>
+        <CssBaseline />
       </UserContext.Provider>
     </ThemeProvider>
   );
+
+
+  // -----------------wiht-login-auth-page-------------------
+  // return (
+  //   <ThemeProvider theme={theme}>
+  //     <UserContext.Provider value={{ userData, setUserData }}>
+  //     <div className={classes.appMain}>
+  //       <Routes>
+  //           <Route exact path="*" element={<Message />} />
+  //           <Route path="/register" element={<Register />} />
+  //           <Route path="/login" element={<Login />} />
+  //         </Routes>
+  //     </div>
+  //     <CssBaseline />
+  //     </UserContext.Provider>
+  //   </ThemeProvider>
+  // );
+
+  //----------------unknown format flow----------------------
+
+  // return (
+  //   <ThemeProvider theme={theme}>
+  //     <SideMenu />
+  //     <UserContext.Provider value={{ userData, setUserData }}>
+
+  //     <div className={classes.appMain}>
+  //       <Home/> 
+  //       <Routes>
+  //           <Route exact path="*" element={<Message />} />
+  //           <Route path="/register" element={<Register />} />
+  //           <Route path="/login" element={<Login />} />
+  //         </Routes>
+  //       <Header/>
+  //      <MenuAppBar/> 
+  //       <MiniDrawer/> 
+  //      <Users /> 
+  //     </div>
+  //     <CssBaseline />
+  //     </UserContext.Provider>
+  //   </ThemeProvider>
+  // );
+
 }
 
 export default App;

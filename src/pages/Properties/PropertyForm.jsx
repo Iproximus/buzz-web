@@ -6,9 +6,9 @@ import * as propertyService from "../../services/propertyService";
 
 
 const statusItems = [
-        { id: 'owned', title: 'Owned' },
-        { id: 'rented', title: 'Rented' },
-    ]
+    { id: 'owned', title: 'Owned' },
+    { id: 'rented', title: 'Rented' },
+]
 
 const initialFValues = {
     id: 0,
@@ -18,22 +18,23 @@ const initialFValues = {
     city: '',
     state: '',
     zip: '',
+    documents:'',
     lastName: '',
     firstName: '',
     phone: '',
     email: '',
-    yearBuilt:'',
-    area:'',
-    lotArea:'',
-    bedRooms:'',
-    bathRooms:'',
-    storey:'',
-    ownedOrRented:'owned',
-    typeId:'',
-    schoolDistrict:'',
-    elementarySchool:'',
-    middleSchool:'',
-    highSchool:''
+    yearBuilt: '',
+    area: '',
+    lotArea: '',
+    bedRooms: '',
+    bathRooms: '',
+    storey: '',
+    ownedOrRented: 'owned',
+    typeId: '',
+    schoolDistrict: '',
+    elementarySchool: '',
+    middleSchool: '',
+    highSchool: ''
 }
 
 export default function PropertyForm(props) {
@@ -107,28 +108,28 @@ export default function PropertyForm(props) {
             <Grid container>
                 <Grid item xs={4}>
                     <h5>LOCATION</h5>
-                    <Controls.Input
+                    <Controls.FileInput
                         name="smallPicture"
                         label="Upload Picture"
                         value={values.smallPicture}
                         onChange={handleInputChange}
                         error={errors.smallPicture}
                     />
-                     <Controls.Input
+                    <Controls.Input
                         name="streetNumber"
                         label="Street Number"
                         value={values.streetNumber}
                         onChange={handleInputChange}
                         error={errors.streetNumber}
                     />
-                     <Controls.Input
+                    <Controls.Input
                         name="street"
                         label="Street Name"
                         value={values.street}
                         onChange={handleInputChange}
                         error={errors.street}
                     />
-                     <Controls.Input
+                    <Controls.Input
                         name="city"
                         label="City"
                         value={values.city}
@@ -148,6 +149,13 @@ export default function PropertyForm(props) {
                         value={values.zip}
                         onChange={handleInputChange}
                         error={errors.zip}
+                    />
+                      <Controls.FileInput
+                        name="documents"
+                        label="Upload Documents"
+                        value={values.documents}
+                        onChange={handleInputChange}
+                        error={errors.documents}
                     />
 
                 </Grid>
@@ -174,7 +182,7 @@ export default function PropertyForm(props) {
                         onChange={handleInputChange}
                         error={errors.phone}
                     />
- 
+
                     <Controls.Input
                         name="email"
                         label="Email"
@@ -190,7 +198,7 @@ export default function PropertyForm(props) {
                         onChange={handleInputChange}
                         error={errors.schoolDistrict}
                     />
-                    
+
                     <Controls.Input
                         name="elementarySchool"
                         label="Elementary School"
@@ -223,9 +231,9 @@ export default function PropertyForm(props) {
                             onClick={resetForm} />
                     </div>
 
-                    </Grid>
-                    <Grid item xs={4}>
-                        <h5>PROPERTY DETAILS</h5>
+                </Grid>
+                <Grid item xs={4}>
+                    <h5>PROPERTY DETAILS</h5>
                     <Controls.Input
                         name="yearBuilt"
                         label="Year Built"
@@ -233,7 +241,7 @@ export default function PropertyForm(props) {
                         onChange={handleInputChange}
                         error={errors.phone}
                     />
- 
+
                     <Controls.Input
                         name="area"
                         label="Area"
@@ -248,7 +256,7 @@ export default function PropertyForm(props) {
                         onChange={handleInputChange}
                         error={errors.lotArea}
                     />
-                   <Controls.Input
+                    <Controls.Input
                         name="bedRooms"
                         label="Bed Rooms"
                         value={values.bedRooms}
@@ -275,7 +283,7 @@ export default function PropertyForm(props) {
                         value={values.ownedOrRented}
                         onChange={handleInputChange}
                         items={statusItems}
-                    /> 
+                    />
                     <Controls.Select
                         name="typeId"
                         label="Type"
@@ -284,8 +292,8 @@ export default function PropertyForm(props) {
                         options={propertyService.getTypeCollection()}
                         error={errors.typeId}
                     />
-                                        </Grid>
-                    </Grid>
+                </Grid>
+            </Grid>
         </Form>
     )
 }
