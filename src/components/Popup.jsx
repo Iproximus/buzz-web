@@ -5,7 +5,7 @@ import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles(theme => ({
     dialogWrapper: {
-        padding: theme.spacing(2),
+        padding: theme.spacing(0),
         position: 'relative',
         top: theme.spacing(0)
     },

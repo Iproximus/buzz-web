@@ -29,8 +29,8 @@ function Register() {
     try {
       const dataObj = { username, email, phnumber, password };
       const loginfo = { email, password };
-      await axios.post('http://localhost:2552/api/users/register', dataObj);
-      const loginResponse = await axios.post('http://localhost:2552/api/users/login', loginfo);
+      await axios.post('http://localhost:1000/api/users/register', dataObj);
+      const loginResponse = await axios.post('http://localhost:1000/api/users/login', loginfo);
       setUserData({
         token: loginResponse.data.token,
         user: loginResponse.data.user

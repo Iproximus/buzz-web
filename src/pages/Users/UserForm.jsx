@@ -3,26 +3,13 @@ import { Grid, } from '@material-ui/core';
 import Controls from "../../components/controls/Controls";
 import { useForm, Form } from '../../components/useForm';
 
-//import * as userService from "../../services/userService";
-
-
-// const genderItems = [
-//     { id: 'male', title: 'Male' },
-//     { id: 'female', title: 'Female' },
-//     { id: 'other', title: 'Other' },
-// ]
-
 const initialFValues = {
     id: 0,
-    firstName: '',
-    lastName: '',
-    email: '',
-    mobile: '',
-    //city: '',
-    //gender: 'male',
-    //departmentId: '',
-    //hireDate: new Date(),
-    //isPermanent: false,
+    firstname: '',
+    lastname: '',
+    emailid: '',
+    role: '',
+    phnumber: '',
 }
 
 export default function UserForm(props) {
@@ -30,16 +17,17 @@ export default function UserForm(props) {
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
-        if ('firstName' in fieldValues)
-            temp.firstName = fieldValues.firstName ? "" : "This field is required."
-        if ('lastName' in fieldValues)
-            temp.lastName = fieldValues.lastName ? "" : "This field is required."
-        if ('email' in fieldValues)
-            temp.email = (/$^|.+@.+..+/).test(fieldValues.email) ? "" : "Email is not valid."
-        if ('mobile' in fieldValues)
-            temp.mobile = fieldValues.mobile.length < 10 || fieldValues.mobile.length > 10 ? "Minimum 10 numbers required." : ""
-        // if ('departmentId' in fieldValues)
-        //     temp.departmentId = fieldValues.departmentId.length != 0 ? "" : "This field is required."
+        if ('firstname' in fieldValues)
+            temp.firstname = fieldValues.firstname ? "" : "This field is required."
+        if ('lastname' in fieldValues)
+            temp.lastname = fieldValues.lastname ? "" : "This field is required."
+        if ('emailid' in fieldValues)
+            temp.emailid = (/$^|.+@.+..+/).test(fieldValues.emailid) ? "" : "Email is not valid."
+        if ('role' in fieldValues)
+            temp.role = fieldValues.role ? "" : "This field is required."
+        if ('phnumber' in fieldValues)
+            temp.phnumber = fieldValues.phnumber.length < 10 || fieldValues.phnumber.length > 10 ? "Minimum 10 numbers required." : ""
+      
         setErrors({
             ...temp
         })
@@ -76,42 +64,42 @@ export default function UserForm(props) {
             <Grid container>
                 <Grid item xs={12}>
                     <Controls.Input
-                        name="firstName"
+                        name="firstname"
                         label="First Name"
-                        value={values.firstName}
+                        value={values.firstname}
                         onChange={handleInputChange}
-                        error={errors.firstName}
+                        error={errors.firstname}
                     />
                     <Controls.Input
-                        name="lastName"
+                        name="lastname"
                         label="Last Name"
-                        value={values.lastName}
+                        value={values.lastname}
                         onChange={handleInputChange}
-                        error={errors.lastName}
+                        error={errors.lastname}
                     />
                     <Controls.Input
-                        name="email"
+                        name="emailid"
                         label="Email"
-                        value={values.email}
+                        value={values.emailid}
                         onChange={handleInputChange}
-                        error={errors.email}
+                        error={errors.emailid}
                     />
                     <Controls.Input
-                        name="mobile"
-                        label="Mobile"
-                        value={values.mobile}
+                        name="role"
+                        label="Role"
+                        value={values.role}
                         onChange={handleInputChange}
-                        error={errors.mobile}
+                        error={errors.role}
                     />
-                     {/* <Controls.Select
-                        name="departmentId"
-                        label="Department"
-                        value={values.departmentId}
+
+                    <Controls.Input
+                        name="phnumber"
+                        label="Mobile"
+                        value={values.phnumber}
                         onChange={handleInputChange}
-                        options={employeeService.getDepartmentCollection()}
-                        error={errors.departmentId}
-                    /> */}
-                      <div>
+                        error={errors.phnumber}
+                    />
+                    <div>
                         <Controls.Button
                             type="submit"
                             text="Submit" />

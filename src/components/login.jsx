@@ -24,7 +24,7 @@ function Login() {
         e.preventDefault();
         try {
             const dataObj = { password, email };
-            const response = await axios.post('http://localhost:2552/api/users/login', dataObj);
+            const response = await axios.post('http://localhost:1000/api/users/login', dataObj);
             setUserData({
                 token: response.data.token,
                 user: response.data.user

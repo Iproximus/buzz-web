@@ -11,13 +11,14 @@ import Controls from "../../components/controls/Controls";
 import Popup from "../../components/Popup";
 import Notification from "../../components/Notification";
 import ConfirmDialog from "../../components/ConfirmDialog";
+import axios from "axios";
 
 //import PeopleOutlineTwoToneIcon from '@material-ui/icons/PeopleOutlineTwoTone';
 //import PageHeader from "../../components/PageHeader";
 const useStyles = makeStyles(theme => ({
     pageContent: {
-        margin: theme.spacing(1),
-        padding: theme.spacing(2)
+        margin: theme.spacing(0),
+        padding: theme.spacing(1)
     },
     searchInput: {
         width: '30%'
@@ -30,10 +31,11 @@ const useStyles = makeStyles(theme => ({
 
 
 const headCells = [
-    { id: 'firstName', label: 'First Name' },
-    { id: 'lastName', label: 'Last Name' },
-    { id: 'email', label: 'Email Address' },
-    { id: 'mobile', label: 'Mobile Number' },
+    { id: 'firstname', label: 'First Name' },
+    { id: 'lastname', label: 'Last Name' },
+    { id: 'emailid', label: 'Email Address' },
+    { id: 'role', label: 'Role' },
+    { id: 'phnumber', label: 'Mobile Number' },
     //{ id: 'department', label: 'Department' },
     { id: 'actions', label: 'Actions', disableSorting: true }
 ]
@@ -62,16 +64,30 @@ export default function Users() {
                 if (target.value == "")
                     return items;
                 else
-                    return items.filter(x => x.firstName.toLowerCase().includes(target.value))
+                    return items.filter(x => x.firstname.toLowerCase().includes(target.value))
             }
         })
     }
-    
+
     const addOrEdit = (user, resetForm) => {
         if (user.id === 0)
-            userService.insertUser(user)
+            // userService.insertUser(user)
+            axios.post('http://localhost:2552/api/users/addUser', user)
+                .then((res) => {
+                    console.log(res.data);
+                    this.res({ users: res.data });
+                }).catch((err) => {
+                    console.log(err);
+                })
         else
-            userService.updateUser(user)
+            // userService.updateUser(user)
+            axios.patch('http://localhost:2552/api/users/updateUser/:_id', user)
+                .then((res) => {
+                    console.log(res.data);
+                    this.res({ users: res.data });
+                }).catch((err) => {
+                    console.log(err);
+                })
         resetForm()
         setRecordForEdit(null)
         setOpenPopup(false)
@@ -80,7 +96,7 @@ export default function Users() {
             isOpen: true,
             message: 'Submitted Successfully',
             type: 'success',
-           
+
         })
     }
 
@@ -89,12 +105,12 @@ export default function Users() {
         setOpenPopup(true)
     }
 
-    const onDelete = id => {
+    const onDelete = _id => {
         setConfirmDialog({
             ...confirmDialog,
             isOpen: false
         })
-        userService.deleteUser(id);
+        userService.deleteUser(_id);
         setRecords(userService.getAllUsers())
         setNotify({
             isOpen: true,
@@ -123,7 +139,7 @@ export default function Users() {
                         }}
                         onChange={handleSearch}
                     />
-                    
+
                     <Controls.Button
                         text="Add"
                         variant="outlined"
@@ -135,38 +151,6 @@ export default function Users() {
                 </Toolbar>
                 <TblContainer>
                     <TblHead />
-                    <TableBody>
-                        {
-                            recordsAfterPagingAndSorting().map(item =>
-                                (<TableRow key={item.id}>
-                                    <TableCell>{item.firstName}</TableCell>
-                                    <TableCell>{item.lastName}</TableCell>
-                                    <TableCell>{item.email}</TableCell>
-                                    <TableCell>{item.mobile}</TableCell>
-                                    {/* <TableCell>{item.department}</TableCell> */}
-                                    <TableCell>
-                                        <Controls.ActionButton
-                                            color="primary"
-                                            onClick={() => { openInPopup(item) }}>
-                                            <EditOutlinedIcon fontSize="small" />
-                                        </Controls.ActionButton>
-                                        <Controls.ActionButton
-                                            color="secondary"
-                                            onClick={() => {
-                                                setConfirmDialog({
-                                                    isOpen: true,
-                                                    title: 'Are you sure to delete this record?',
-                                                    subTitle: "You can't undo this operation",
-                                                    onConfirm: () => { onDelete(item.id) }
-                                                })
-                                            }}>
-                                            <CloseIcon fontSize="small" />
-                                        </Controls.ActionButton>
-                                    </TableCell>
-                                </TableRow>)
-                            )
-                        }
-                    </TableBody>
                 </TblContainer>
                 <TblPagination />
             </Paper>
@@ -177,7 +161,8 @@ export default function Users() {
             >
                 <UserForm
                     recordForEdit={recordForEdit}
-                    addOrEdit={addOrEdit} />
+                    addOrEdit={addOrEdit}
+                />
             </Popup>
             <Notification
                 notify={notify}

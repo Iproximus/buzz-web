@@ -28,8 +28,6 @@ function AuthOption() {
                     
                     <Button style={signupBtn} onClick={logout}>Log Out</Button>
                 </>
-
-
             ) : (
                 <>
                     <Button style={signupBtn} onClick={register}>Sign Up</Button>

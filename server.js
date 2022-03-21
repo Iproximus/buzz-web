@@ -1,18 +1,28 @@
 const propertyService = require('./src/services/propertyRoute');
+const userRoute = require('./src/services/userRoute');
+
 var cors = require('cors');
-    // Joi.objectId = require('joi-objectid')(Joi);
+
 const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
-app.use(cors()) // Use this after the variable declaration
+app.use(cors())
 
-mongoose.connect('mongodb://localhost:27017/property', { useNewUrlParser: true })
-const db = mongoose.connection
-db.on('error', (error) => console.error(error))
-db.once('open', () => console.log('Connected to Database'))
+// const conection1 = mongoose.createConnection('mongodb://localhost:27017/property', { useNewUrlParser: true })
+const conection = mongoose.createConnection('mongodb://localhost:27017/buzz', { useNewUrlParser: true })
+    // conection1.model('users', require('../buzz-web/models/user.model'))
+    // conection2.model('sampleProperty', require('../buzz-web/models/property.model'))
+
+
+conection.on('error', (error) => console.error(error))
+conection.once('open', () => console.log('Connected two Database'))
 
 app.use(express.json());
-app.use('/api/property',propertyService);
-//const users = require('./routes/registerRoute')
+app.use('/api/users', userRoute);
 
-app.listen(2552, () => console.log('Server Started at 2552'))
+app.listen(2552, () => console.log('#### Two DBs Connected 2552 ####'))
+
+
+
+//----->npm run start
+//-----localhost:3003
