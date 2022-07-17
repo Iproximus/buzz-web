@@ -34,3 +34,14 @@
 ::-webkit-file-upload-button:hover{
     background-color: #3c53ca;
 }
+
+.property-form{
+    margin-bottom: 6%;
+}
+.property-form-owner{
+    
+    margin-bottom: 6%;
+    margin-right: 9%;
+    
+    
+}

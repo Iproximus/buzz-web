@@ -1,24 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-import './App.css';
+import { makeStyles, CssBaseline, createTheme, ThemeProvider } from '@material-ui/core';
 import axios from 'axios';
-
-import { makeStyles, CssBaseline, createMuiTheme, ThemeProvider } from '@material-ui/core';
-import MenuAppBar from "../components/controls/AppBar";
+import './App.css';
 import MiniDrawer from "../components/controls/Drawer";
-
-
-import Users from "../pages/Users/Users";
-
-import Register from '../components/register'
-import Login from '../components/login'
-import Home from '../components/home'
-import Message from '../components/message'
 import UserContext from '../context/userContext'
 
 
-const theme = createMuiTheme({
+//import { BrowserRouter, Routes, Route } from "react-router-dom";
+// import MenuAppBar from "../components/controls/AppBar";
+// import Users from "../pages/Users/Users";
+// import Register from '../components/register'
+// import Login from '../components/login'
+// import Home from '../components/home'
+// import Message from '../components/message'
+
+
+const theme = createTheme({
   palette: {
     primary: {
       main: "#333996",
@@ -89,7 +86,6 @@ function App() {
     <ThemeProvider theme={theme}>
       <UserContext.Provider value={{ userData, setUserData }}>
         <div className={classes.appMain}>
-         
           <MiniDrawer />
         </div>
         <CssBaseline />

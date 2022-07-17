@@ -8,7 +8,7 @@
 // adding name below the icon in drawer
 
 import React from 'react';
-import {  Route, Routes, Link } from 'react-router-dom';
+import { Route, Routes, Link } from 'react-router-dom';
 import logo from './../../assets/images/netflix.png';
 import PropTypes from 'prop-types';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -56,7 +56,7 @@ const styles = theme => ({
     display: 'flex',
   },
   appBar: {
-    height:'70px',
+    height: '70px',
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
@@ -71,7 +71,7 @@ const styles = theme => ({
     }),
   },
   menuButton: {
-    marginLeft: 12, 
+    marginLeft: 12,
     duration: theme.transitions.duration.enteringScreen,
     marginRight: 36,
   },
@@ -94,9 +94,9 @@ const styles = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    width: theme.spacing.unit * 7,
+    width: theme.spacing(7),
     [theme.breakpoints.up('sm')]: {
-      width: theme.spacing.unit * 9,
+      width: theme.spacing(9),
     },
   },
   toolbar: {
@@ -109,7 +109,7 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing(3),
     overflow: 'scroll',
 
   },
@@ -168,14 +168,14 @@ class MiniDrawer extends React.Component {
             >
               <MenuIcon />
             </IconButton>
-            <img src={logo} class="organizationLogo" alt='org-img'/>
-            <Typography variant="title" color="inherit" noWrap class="organizationName">
+            <img src={logo} className="organizationLogo" alt='org-img' />
+            <Typography variant="title" color="inherit" noWrap className="organizationName">
               BUZZ
             </Typography>
 
 
             {auth && (
-              <div class="iconMenu">
+              <div className="iconMenu">
                 <IconButton
                   aria-owns={open ? 'menu-appbar' : null}
                   aria-haspopup="true"
@@ -224,15 +224,16 @@ class MiniDrawer extends React.Component {
           <List>
             {/* <ListItem>Hai</ListItem> */}
             {/* {mailFolderListItems} */}
-            <Link to="/dashboard" class="link">
+            <Link to="/dashboard" className="link">
               <ListItem button>
-                <ListItemIcon>
+                <ListItemIcon >
                   <InboxIcon />
                 </ListItemIcon>
                 <ListItemText primary="Dashboard" />
               </ListItem>
             </Link>
-            <Link to="/users" class="link">
+
+            <Link to="/users" className="link">
               <ListItem button>
                 <ListItemIcon>
                   <UsersIcon />
@@ -240,7 +241,7 @@ class MiniDrawer extends React.Component {
                 <ListItemText primary="Users" />
               </ListItem>
             </Link>
-            <Link to="/properties" class="link">
+            <Link to="/properties" className="link">
               <ListItem button>
                 <ListItemIcon>
                   <PropertiesIcon />
@@ -248,7 +249,7 @@ class MiniDrawer extends React.Component {
                 <ListItemText primary="Properties" />
               </ListItem>
             </Link>
-            <Link to="/reports" class="link">
+            <Link to="/reports" className="link">
               <ListItem button>
                 <ListItemIcon>
                   <ReportsIcon />
@@ -256,7 +257,7 @@ class MiniDrawer extends React.Component {
                 <ListItemText primary="Reports" />
               </ListItem>
             </Link>
-            <Link to="/settings" class="link">
+            <Link to="/settings" className="link">
               <ListItem button>
                 <ListItemIcon>
                   <SettingsIcon />

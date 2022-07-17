@@ -45,10 +45,10 @@ export default function ConfirmDialog(props) {
                 </IconButton>
             </DialogTitle>
             <DialogContent className={classes.dialogContent}>
-                <Typography variant="h6">
+                <Typography variant="inherit">
                     {confirmDialog.title}
                 </Typography>
-                <Typography variant="subtitle2">
+                <Typography variant="inherit">
                     {confirmDialog.subTitle}
                 </Typography>
             </DialogContent>
