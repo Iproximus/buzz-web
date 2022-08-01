@@ -93,14 +93,14 @@ export default function Properties() {
     }
 
     const listall = () => {
-        axios.get('http://localhost:3000/propertys/listAllpropertys')
+        axios.get('http://localhost:3001/propertys/listAllpropertys')
             .then(res => {
                 return setPost(res.data);
             });
     }
 
     const getpropertybyid = (id) => {
-        axios.get('http://localhost:3000/propertys/getproperty/' + id)
+        axios.get('http://localhost:3001/propertys/getproperty/' + id)
             .then(res => {
                 setToUpdate({ updateproperty: res.data });
             });
