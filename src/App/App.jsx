@@ -5,7 +5,6 @@ import './App.css';
 import MiniDrawer from "../components/controls/Drawer";
 import UserContext from '../context/userContext'
 
-
 //import { BrowserRouter, Routes, Route } from "react-router-dom";
 // import MenuAppBar from "../components/controls/AppBar";
 // import Users from "../pages/Users/Users";
@@ -13,7 +12,6 @@ import UserContext from '../context/userContext'
 // import Login from '../components/login'
 // import Home from '../components/home'
 // import Message from '../components/message'
-
 
 const theme = createTheme({
   palette: {
@@ -52,7 +50,6 @@ const useStyles = makeStyles({
 
 function App() {
   const classes = useStyles();
-
   const [userData, setUserData] = useState({
     token: undefined,
     user: undefined
@@ -92,7 +89,6 @@ function App() {
       </UserContext.Provider>
     </ThemeProvider>
   );
-
 
   // -----------------wiht-login-auth-page-------------------
   // return (

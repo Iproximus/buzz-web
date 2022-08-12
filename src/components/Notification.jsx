@@ -1,6 +1,7 @@
 import React from 'react'
 import { Snackbar, makeStyles } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
+import { VerticalAlignBottom } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -28,7 +29,7 @@ export default function Notification(props) {
             className={classes.root}
             open={notify.isOpen}
             autoHideDuration={2000}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'bottom'  }}
+            anchorOrigin ={{vertical: 'top', horizontal: 'center'}}
             onClose={handleClose}>
             <Alert
                 variant='filled'

@@ -41,7 +41,9 @@
 .property-form-owner{
     
     margin-bottom: 6%;
-    margin-right: 9%;
-    
-    
+    margin-right: 9%;   
 }
+.red-text{
+    color: red;
+}
+

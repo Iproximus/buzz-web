@@ -1,12 +1,3 @@
-// change the icons --------------------------------------------------FINSIHED
-// adding the routing functionality-----------------------------------FINISHED
-// drawer height adjustment-------------------------------------------FINISHED
-// responsive
-// remove name from menu and add it below menu icon-------------------FINISHED
-// Log out separate word----------------------------------------------FINISHED
-// buzz => logo ,center of the topbar contains a organization name----FINISHED
-// adding name below the icon in drawer
-
 import React from 'react';
 import { Route, Routes, Link } from 'react-router-dom';
 import logo from './../../assets/images/netflix.png';
@@ -24,9 +15,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-// import MenuAppBar from "../controls/AppBar";
+import{MenuItem,Menu,Tooltip}  from '@material-ui/core';
 import InboxIcon from '@material-ui/icons/Dashboard';
 import UsersIcon from '@material-ui/icons/PeopleAlt';
 import PropertiesIcon from '@material-ui/icons/Apps';
@@ -169,7 +158,7 @@ class MiniDrawer extends React.Component {
               <MenuIcon />
             </IconButton>
             <img src={logo} className="organizationLogo" alt='org-img' />
-            <Typography variant="title" color="inherit" noWrap className="organizationName">
+            <Typography variant="h4" color="inherit" noWrap className="organizationName">
               BUZZ
             </Typography>
 
@@ -225,45 +214,55 @@ class MiniDrawer extends React.Component {
             {/* <ListItem>Hai</ListItem> */}
             {/* {mailFolderListItems} */}
             <Link to="/dashboard" className="link">
+            <Tooltip title="Dashboard" placement="right" arrow>
               <ListItem button>
                 <ListItemIcon >
                   <InboxIcon />
                 </ListItemIcon>
                 <ListItemText primary="Dashboard" />
               </ListItem>
+              </Tooltip>
             </Link>
 
             <Link to="/users" className="link">
+              <Tooltip title="Users" placement="right" arrow>
               <ListItem button>
                 <ListItemIcon>
                   <UsersIcon />
                 </ListItemIcon>
                 <ListItemText primary="Users" />
               </ListItem>
+              </Tooltip>
             </Link>
             <Link to="/properties" className="link">
+              <Tooltip title="Properties" placement="right" arrow>
               <ListItem button>
                 <ListItemIcon>
                   <PropertiesIcon />
                 </ListItemIcon>
                 <ListItemText primary="Properties" />
               </ListItem>
+              </Tooltip>
             </Link>
             <Link to="/reports" className="link">
+              <Tooltip title="Reports" placement="right" arrow>
               <ListItem button>
                 <ListItemIcon>
                   <ReportsIcon />
                 </ListItemIcon>
                 <ListItemText primary="Reports" />
               </ListItem>
+              </Tooltip>
             </Link>
             <Link to="/settings" className="link">
+              <Tooltip title="Settings" placement="right" arrow>
               <ListItem button>
                 <ListItemIcon>
                   <SettingsIcon />
                 </ListItemIcon>
                 <ListItemText primary="Settings" />
               </ListItem>
+              </Tooltip>
             </Link>
           </List>
           {/* <Divider /> */}

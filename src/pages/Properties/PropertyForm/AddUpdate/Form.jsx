@@ -1,37 +1,43 @@
 import React, { useState } from "react";
-import PropertyDetails from '../FormAdd/PropertyDetails'
-import OwnerDetails from '../FormAdd/OwnerDetails'
-import LandDetails from '../FormAdd/LandDetails'
+import Address from './Address'
+import Owner from './Owner'
+import Features from './Features'
 import Notification from "../../../../components/Notification";
 import { useForm } from "react-hook-form";
 import axios from 'axios';
 import { Box, Button } from '@mui/material';
 import { useNavigate } from "react-router-dom";
+import message from "../../../../helper/MessageText";
+require('dotenv').config()
 
 var countrycode = 0;
 var statecode = 0;
 var citycode = 0;
-function AddPropertyFrom() {
-
+function Form(props) {
     const { register, trigger, getValues, formState: { errors } } = useForm();
     const [currentForm, setCurrentForm] = useState(0);
+    const [file ,setFile] = useState()
     const passStatCity = (country, state, city) => {
         countrycode = country;
         statecode = state;
         citycode = city;
     }
+    
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
     const history = useNavigate();
+    const ApiURL = process.env.REACT_APP_API_HOST+process.env.REACT_APP_API_PORT;
     const forms = [
         {
             fields: ["uploadimg", "streetnumber", "streetname", "zipcode"],
             component: (register, errors) => (
-                <PropertyDetails
+                <Address
                     key={0}
                     shouldDisplay={currentForm === 0}
                     register={register}
                     errors={errors}
                     func={passStatCity}
+                    data={props.propdata === null || undefined ? '':  props.propdata.updateproperty }
+                    passingImage={imagesfile => setFile(imagesfile)}
                 />
             )
         },
@@ -39,27 +45,30 @@ function AddPropertyFrom() {
         {
             fields: ["firstname", "lastname", "phone", "email"],
             component: (register, errors) => (
-                <OwnerDetails
+                <Owner
                     key={1}
                     shouldDisplay={currentForm === 1}
                     register={register}
                     errors={errors}
+                    data={props.propdata === null || undefined ? '':  props.propdata.updateproperty }
                 />
             )
         },
 
         {
-            fields: ["yearbuilt", "area", "lotarea", "bedrooms", "bathrooms", "storey", "landtype", "hometype", "homevalue", "taxassessment"],
+            fields: ["yearbuilt", "area", "lotarea", "bedrooms", "bathrooms", "storey", "ownership", "duestatus","hometype", "homevalue", "taxassessment"],
             component: (register, errors) => (
-                <LandDetails
+                <Features
                     key={2}
                     shouldDisplay={currentForm === 2}
                     register={register}
                     errors={errors}
+                    data={props.propdata === null || undefined ? '':  props.propdata.updateproperty }
                 />
             )
         }
     ];
+
 
     const moveToPrevious = () => {
         trigger(forms[currentForm].fields).then(valid => {
@@ -72,19 +81,38 @@ function AddPropertyFrom() {
             if (valid) setCurrentForm(currentForm + 1);
         });
     };
-    const stepHeading = ['Property Details', 'Owner Details', 'Land Details']
+    
+    const stepHeading = ['Address', 'Owner', 'Features']
     const prevButton = currentForm !== 0;
     const nextButton = currentForm !== forms.length - 1;
     const subbtn = (e) => {
         trigger(forms[currentForm].fields).then(valid => {
-            if (valid) { handleSubmit(e); }
+            if (valid) {
+                if(props.addedit === null){addproperty(e)}
+                else  {updateproperty(e)};
+                }
         });
     }
 
-    const handleSubmit = async (e) => {
-        //e.preventDefault();
+    
+async function postImage({ image }) {
+    try{
+    if(image){
+    const formData = new FormData();
+    formData.append("image", image);
+    const result = await axios.post(ApiURL+'/s3bucket/addimages', formData,{headers: { 'Content-Type': 'multipart/form-data' }});
+    return result.data;
+    }else return null
+} catch (err) {
+    console.log(err);
+}
+  }
+    const addproperty = async (e) => {
+        e.preventDefault();
         try {
+            const s3ImageToken =  postImage({image: file})
             const data = getValues();
+            const uploadimg = s3ImageToken.Key
             const streetnumber = data.streetnumber;
             const streetname = data.streetname;
             const country = countrycode
@@ -101,40 +129,81 @@ function AddPropertyFrom() {
             const bedrooms = data.bedrooms;
             const bathrooms = data.bathrooms;
             const storey = data.storey;
-            const landtype = data.landtype;
+            const ownership = data.ownership;
+            const duestatus = data.duestatus;
             const hometype = data.hometype;
             const homevalue = data.homevalue;
             const taxassessment = data.taxassessment;
-            const dataobj = { streetnumber, streetname, country, state, city, zipcode, firstname, lastname, phone, email, yearbuilt, area, lotarea, bedrooms, bathrooms, storey, landtype, hometype, homevalue, taxassessment }
-            await axios.post('http://localhost:3000/propertys/addpropertys', dataobj);
+            const dataobj = { uploadimg,streetnumber, streetname, country, state, city, zipcode, firstname, lastname, phone, email, yearbuilt, area, lotarea, bedrooms, bathrooms, storey, ownership,duestatus, hometype, homevalue, taxassessment }
+            await axios.post(ApiURL+'/properties/addproperty', dataobj);
+            
+            setNotify({
+                isOpen: true,
+                message: message.PROPERTY_ADDED,
+                type: 'success'
+            })
+            setTimeout(() => history('/dashboard'), 1000);
+            setTimeout(() => history('/properties'), 1000);
         } catch (err) {
             console.log(err);
         }
+       
+};
 
-        setNotify({
-            isOpen: true,
-            message: 'Property added successfully',
-            type: 'success'
-        })
-        
-        setTimeout(() => history('/dashboard'), 1000);
-        setTimeout(() => history('/properties'), 1000);
-        
-        
+const updateproperty = async (e) => {
+    e.preventDefault();
+    try {
+        const prop = getValues();
+        const streetnumber = prop.streetnumber;
+        const streetname = prop.streetname;
+        const country = prop.countrycode
+        const state = prop.statecode;
+        const city = prop.citycode;
+        const zipcode = prop.zipcode;
+        const firstname = prop.firstname;
+        const lastname = prop.lastname;
+        const phone = prop.phone;
+        const email = prop.email;
+        const yearbuilt = prop.yearbuilt;
+        const area = prop.area;
+        const lotarea = prop.lotarea;
+        const bedrooms = prop.bedrooms;
+        const bathrooms = prop.bathrooms;
+        const storey = prop.storey;
+        const ownership = prop.ownership;
+        const duestatus = prop.duestatus;
+        const hometype = prop.hometype;
+        const homevalue = prop.homevalue;
+        const taxassessment = prop.taxassessment;
+        await axios.patch(ApiURL+'/properties/updateproperty/' + props.propdata.updateproperty._id,
+            {
+                streetnumber, streetname, country, state, city, zipcode,
+                firstname, lastname, phone, email, yearbuilt, area,
+                lotarea, bedrooms, bathrooms, storey, ownership,duestatus, hometype,
+                homevalue, taxassessment
+            }
+        );
+    } catch (err) {
+        console.log(err);
+    }
+    
+    setNotify({
+        isOpen: true,
+        message: message.PROPERTY_UPDATED,
+        type: 'success'
+    })
+    setTimeout(() => history('/dashboard'), 1000);
+    setTimeout(() => history('/properties'), 1000);
 };
 
 return (
-    <div>
-
-        <div style={{ display: "flex", alignItems: "center" }}>
-            {currentForm < 3 && (
-                <p style={{ color: "green" }}>Step {currentForm + 1} of 3 </p>
-            )}
-            <h2 style={{ marginLeft: "15px" }}>{stepHeading[currentForm]}</h2>
+    <div style={{marginTop: '-25px'}}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
+            {currentForm < 3 && ( <p style={{ color: "green" }}>Step {currentForm + 1} of 3 </p> )}
+            <h2 style={{ marginLeft: "15px" }}>{stepHeading[currentForm] }</h2>
         </div>
 
         {forms.map(form => form.component(register, errors))}
-
         <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "10px" }}>
             <Box style={{ marginRight: "10px" }} gridColumn="span 6">
                 {prevButton && (<Button
@@ -170,4 +239,4 @@ return (
 );
 }
 
-export default AddPropertyFrom;
+export default Form;
