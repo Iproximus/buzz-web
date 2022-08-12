@@ -1,14 +1,5 @@
-// change the icons --------------------------------------------------FINSIHED
-// adding the routing functionality-----------------------------------FINISHED
-// drawer height adjustment-------------------------------------------FINISHED
-// responsive
-// remove name from menu and add it below menu icon-------------------FINISHED
-// Log out separate word----------------------------------------------FINISHED
-// buzz => logo ,center of the topbar contains a organization name----FINISHED
-// adding name below the icon in drawer
-
 import React from 'react';
-import {  Route, Routes, Link } from 'react-router-dom';
+import { Route, Routes, Link } from 'react-router-dom';
 import logo from './../../assets/images/netflix.png';
 import PropTypes from 'prop-types';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -24,9 +15,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-// import MenuAppBar from "../controls/AppBar";
+import{MenuItem,Menu,Tooltip}  from '@material-ui/core';
 import InboxIcon from '@material-ui/icons/Dashboard';
 import UsersIcon from '@material-ui/icons/PeopleAlt';
 import PropertiesIcon from '@material-ui/icons/Apps';
@@ -56,7 +45,7 @@ const styles = theme => ({
     display: 'flex',
   },
   appBar: {
-    height:'70px',
+    height: '70px',
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
@@ -71,7 +60,7 @@ const styles = theme => ({
     }),
   },
   menuButton: {
-    marginLeft: 12, 
+    marginLeft: 12,
     duration: theme.transitions.duration.enteringScreen,
     marginRight: 36,
   },
@@ -94,9 +83,9 @@ const styles = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    width: theme.spacing.unit * 7,
+    width: theme.spacing(7),
     [theme.breakpoints.up('sm')]: {
-      width: theme.spacing.unit * 9,
+      width: theme.spacing(9),
     },
   },
   toolbar: {
@@ -109,7 +98,7 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing(3),
     overflow: 'scroll',
 
   },
@@ -168,14 +157,14 @@ class MiniDrawer extends React.Component {
             >
               <MenuIcon />
             </IconButton>
-            <img src={logo} class="organizationLogo" alt='org-img'/>
-            <Typography variant="title" color="inherit" noWrap class="organizationName">
+            <img src={logo} className="organizationLogo" alt='org-img' />
+            <Typography variant="h4" color="inherit" noWrap className="organizationName">
               BUZZ
             </Typography>
 
 
             {auth && (
-              <div class="iconMenu">
+              <div className="iconMenu">
                 <IconButton
                   aria-owns={open ? 'menu-appbar' : null}
                   aria-haspopup="true"
@@ -224,45 +213,56 @@ class MiniDrawer extends React.Component {
           <List>
             {/* <ListItem>Hai</ListItem> */}
             {/* {mailFolderListItems} */}
-            <Link to="/dashboard" class="link">
+            <Link to="/dashboard" className="link">
+            <Tooltip title="Dashboard" placement="right" arrow>
               <ListItem button>
-                <ListItemIcon>
+                <ListItemIcon >
                   <InboxIcon />
                 </ListItemIcon>
                 <ListItemText primary="Dashboard" />
               </ListItem>
+              </Tooltip>
             </Link>
-            <Link to="/users" class="link">
+
+            <Link to="/users" className="link">
+              <Tooltip title="Users" placement="right" arrow>
               <ListItem button>
                 <ListItemIcon>
                   <UsersIcon />
                 </ListItemIcon>
                 <ListItemText primary="Users" />
               </ListItem>
+              </Tooltip>
             </Link>
-            <Link to="/properties" class="link">
+            <Link to="/properties" className="link">
+              <Tooltip title="Properties" placement="right" arrow>
               <ListItem button>
                 <ListItemIcon>
                   <PropertiesIcon />
                 </ListItemIcon>
                 <ListItemText primary="Properties" />
               </ListItem>
+              </Tooltip>
             </Link>
-            <Link to="/reports" class="link">
+            <Link to="/reports" className="link">
+              <Tooltip title="Reports" placement="right" arrow>
               <ListItem button>
                 <ListItemIcon>
                   <ReportsIcon />
                 </ListItemIcon>
                 <ListItemText primary="Reports" />
               </ListItem>
+              </Tooltip>
             </Link>
-            <Link to="/settings" class="link">
+            <Link to="/settings" className="link">
+              <Tooltip title="Settings" placement="right" arrow>
               <ListItem button>
                 <ListItemIcon>
                   <SettingsIcon />
                 </ListItemIcon>
                 <ListItemText primary="Settings" />
               </ListItem>
+              </Tooltip>
             </Link>
           </List>
           {/* <Divider /> */}
